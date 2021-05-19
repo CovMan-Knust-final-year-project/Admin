@@ -16,6 +16,12 @@
             </a>
           </li>
           <li class="nav-item ">
+            <a class="nav-link" href="./admin_info.php">
+              <i class="material-icons">admin_panel_settings</i>
+              <p>Admin Info</p>
+            </a>
+          </li>
+          <li class="nav-item ">
             <a class="nav-link" href="./students.php">
               <i class="material-icons">person_outline</i>
               <p>Students</p>

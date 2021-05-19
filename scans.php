@@ -93,7 +93,7 @@
                                             <td class="text-center">
                                                 <button type="button" name="update" class="btn-sm btn-dark"><i
                                                         class=" fa fa-envelope"></i></button>
-                                                <button type="button" name="delete" class="btn-sm btn-danger update" data-toggle="modal" data-target="#authoritiesModal"><i
+                                                <button type="button" name="delete" class="btn-sm btn-danger update" onclick="callAmbulance()"><i
                                                         class="fa fa-ambulance"></i></button>
                                             </td>
                                         </tr>
@@ -110,3 +110,38 @@
         </div>
     </div>
     <?php include_once 'partials/footer.php'?>
+    <script>
+        function callAmbulance(id){
+        Swal.fire({
+                title: 'Call Ambulance?',
+                text: 'Are you sure you want to transfer this student to the hospital?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, do it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "database/call_ambulance.php",
+                        method: "POST",
+                        data: {
+                            "id" : id, 
+                        },
+                        success: function(data) {
+                        //    alert(data);
+                        if(data=='success'){
+                            Swal.fire(
+                                'Ambulance called!',
+                                'Hospital has been notified.',
+                                'success'
+                            ).then((result) =>{
+                                location.reload();
+                            })
+                          }
+                        }
+                    });
+                }
+            })
+    }
+    </script>

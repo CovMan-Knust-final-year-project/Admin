@@ -20,7 +20,7 @@ before a person is allowed into a public establishment.
 
 Lack of an autonomous system to emphasize the obedience of COVID-19 protocols has brought about
 the need for human resources to be used for the monitoring of the said protocols (wearing of nose
-mask, using sanitizer, checking temperature).
+mask, using sanitizer, checking temperature and so much more.).
 
 ## :camera_flash: Screenshots-->
 
