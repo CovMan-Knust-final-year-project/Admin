@@ -8,14 +8,14 @@
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
             <div class="navbar-wrapper">
-                <a class="navbar-brand" href="javascript:;">CovMan | Students</a>
+                <a class="navbar-brand" href="javascript:;">CovMan | Mount Points</a>
             </div>
              <!-- adding the remaining navbar -->
         <?php include_once 'partials/navbar.php';?>
     
     <!-- adding the popup modal -->
-    <?php include_once 'includes/add_user.php';?>
-    <?php include_once 'includes/edit_user.php';?>
+    <?php include_once 'includes/add_mount_point.php';?>
+    <?php include_once 'includes/edit_mount_point.php';?>
 
     <!-- End Navbar -->
     <div class="content">
@@ -23,16 +23,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header card-header-primary">
+                        <div class="card-header card-header-primary" style="background: black;">
                             <div class="row">
                                 <div class="col">
-                                    <h4 class="card-title ">All Students</h4>
-                                    <p class="card-category"> All students registered into the system</p>
+                                    <h4 class="card-title ">All Mount Points</h4>
+                                    <p class="card-category"> Places in your organization where the CovMan Hardware is installed</p>
                                 </div>
                                 <div class="col">
                                     <div class="col text-right">
-                                        <button type="button" class="btn btn-white text-primary" data-toggle="modal" data-target="#accountModal">
-                                            <i class="fa fa-plus"></i> Add Student
+                                        <button type="button" class="btn btn-white text-primary" data-toggle="modal" data-target="#addMountPointModal">
+                                            <i class="fa fa-plus"></i> Add Mount Point
                                         </button>
                                     </div>
                                 </div>
@@ -46,22 +46,16 @@
                                             S/N
                                         </th>
                                         <th>
-                                            Image
+                                            Status
                                         </th>
                                         <th>
-                                            Name
+                                            Name of Venue
                                         </th>
                                         <th>
-                                            Dob
+                                            Date mounted
                                         </th>
-                                        <th>
-                                            Phone number
-                                        </th>
-                                        <th>
-                                            Level
-                                        </th>
-                                        <th class="text-center">
-                                            Action
+                                        <th class='text-center'>
+                                            Actions
                                         </th>
                                     </thead>
                                     <tbody>
@@ -70,22 +64,16 @@
                                                 1
                                             </td>
                                             <td>
-                                                <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg" data-holder-rendered="true" width="15%">
+                                                <span class="badge badge-success">Operational</span>
                                             </td>
                                             <td>
-                                                Minerva Hooper
+                                                College of Science
                                             </td>
                                             <td>
                                                 2020-01-01
                                             </td>
-                                            <td class="text-primary">
-                                                (026) 897-7129
-                                            </td>
-                                            <td class="text-primary">
-                                                200
-                                            </td>
                                             <td class="text-center">
-                                                <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" data-target="#editaccountModal"><i
+                                                <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" data-target="#editMountPointModal"><i
                             class=" fa fa-pencil"></i></button>
                                                 <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
                                             </td>
@@ -96,19 +84,13 @@
                                                 2
                                             </td>
                                             <td>
-                                                <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg" data-holder-rendered="true" width="15%">
+                                                <span class="badge badge-danger">Damaged</span>
                                             </td>
                                             <td>
-                                                Hipman Heart
+                                                School of Business
                                             </td>
                                             <td>
                                                 2020-01-01
-                                            </td>
-                                            <td class="text-primary">
-                                                (026) 897-7129
-                                            </td>
-                                            <td class="text-primary">
-                                                400
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" name="update" class="btn-sm btn-dark delete"><i

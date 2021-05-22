@@ -22,6 +22,12 @@
             </a>
           </li>
           <li class="nav-item ">
+            <a class="nav-link" href="./mount_points.php">
+              <i class="material-icons">rv_hookup</i>
+              <p>Mount Points</p>
+            </a>
+          </li>
+          <li class="nav-item ">
             <a class="nav-link" href="./students.php">
               <i class="material-icons">person_outline</i>
               <p>Students</p>
@@ -31,6 +37,12 @@
             <a class="nav-link" href="./scans.php">
               <i class="material-icons">content_paste</i>
               <p>Scans</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="./attendance.php">
+              <i class="material-icons">query_stats</i>
+              <p>Attendance</p>
             </a>
           </li>
           <!-- <li class="nav-item ">

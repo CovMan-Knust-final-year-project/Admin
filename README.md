@@ -26,7 +26,8 @@ mask, using sanitizer, checking temperature and so much more.).
 
 <!-- You can add more screenshots here if you like -->
 <img src="screenshots/1.png" width="30%">&emsp;<img src="screenshots/2.png" width="30%">
-<img src="screenshots/3.png" width="30%">
+<img src="screenshots/3.png" width="30%">&emsp;<img src="screenshots/4.png" width="30%">
+<img src="screenshots/5.png" width="30%">
 
 ## :file_folder: Repo Walkthrough
 
@@ -60,6 +61,14 @@ The repository contains php files used for the project. This is the structure.
 ------/
 
 ```
+
+## Features
+
+1. View all activities and statistics in the system.
+2. Add, edit delete mount points (Places in the system where the CovMan hardware is mounted).
+3. Add, edit and delete students.
+4. View Scans, report suspected cases to the hospital authorities.
+5. View attendance of students. 
 
 ## License
 

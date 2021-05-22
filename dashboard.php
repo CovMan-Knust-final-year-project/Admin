@@ -157,6 +157,7 @@
                                 <thead class="text-warning">
                                     <th>S/N</th>
                                     <th>Name</th>
+                                    <th>Venue</th>
                                     <th>Temperature</th>
                                     <th>Time</th>
                                 </thead>
@@ -164,12 +165,14 @@
                                     <tr>
                                         <td>1</td>
                                         <td>Dakota Rice</td>
+                                        <td>COS</td>
                                         <td>36&#176;C</td>
                                         <td>16:04</td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
                                         <td>Minerva Hooper</td>
+                                        <td>KSB</td>
                                         <td>34&#176;C</td>
                                         <td>16:44</td>
                                     </tr>

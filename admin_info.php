@@ -83,6 +83,7 @@
                                     <p class="card-description">
                                     The aim of CovMan is to completely replace and automatize all checks that have to be done due to COVID-19                                    </p>
                                     <a href="javascript:;" class="btn btn-primary btn-round">Contact CovMan</a>
+                                    <a href="javascript:;" class="btn btn-dark btn-round">Download User App</a>
                                 </div>
                             </div>
                         </div>
