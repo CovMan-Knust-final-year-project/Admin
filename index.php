@@ -57,6 +57,10 @@
           <input type="text" id="company_name" name="company_name" required="required"/>
         </div>
         <div class="form-group">
+          <label for="username">Phone number</label>
+          <input type="text" id="phone_number" name="phone_number" onkeypress="return numberOnly(event)" maxlength="14" required="required"/>
+        </div>
+        <div class="form-group">
           <label for="username">Username</label>
           <input type="text" id="username" name="username" required="required"/>
         </div>
@@ -79,6 +83,27 @@
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='https://codepen.io/andytran/pen/vLmRVp.js'></script>
     <script  src="login_assets/js/index.js"></script>
+
+    <script>
+       //Numbers only for arithmetics
+      function numberOnly(e) {
+          var arr = "1234567890";
+          var code;
+          if (window.event)
+              code = e.keyCode;
+          else
+              code = e.which;
+          var char = keychar = String.fromCharCode(code);
+          if (arr.indexOf(char) == -1)
+              return false;
+      }
+
+      //format phone number
+      $("input[name='phone_number']").keyup(function() {
+          $(this).val($(this).val().replace(/^(\d{3})(\d{3})(\d)+$/, "($1) $2-$3"));
+      });
+    </script>
 </body>
 
 </html>
+
