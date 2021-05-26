@@ -3,15 +3,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Login Form - Modal</title>
+  <title>CovMan | Login</title>
   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
-  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons'>
 
-      <link rel="stylesheet" href="login_assets/css/style.css">
+    <link rel="stylesheet" href="login_assets/css/style.css"> 
 
-  
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
 </head>
 
 <body>
@@ -26,14 +27,14 @@
       <h4 style="text-align: center;">A comprehensive Covid 19 management system.</h4>
     </div>
     <div class="form-content">
-      <form>
+      <form method="POST" enctype="multipart/form-data" id="login_form">
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="text" id="username" name="username" required="required"/>
+          <input type="text" id="login_username" name="login_username" required="required"/>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" required="required"/>
+          <input type="password" id="login_password" name="login_password" required="required"/>
         </div>
         <div class="form-group">
           <label class="form-remember">
@@ -51,14 +52,14 @@
       <h1>Register Account</h1>
     </div>
     <div class="form-content">
-      <form>
+      <form method="POST" enctype="multipart/form-data" id="register_form">
         <div class="form-group">
           <label for="username">Company name</label>
           <input type="text" id="company_name" name="company_name" required="required"/>
         </div>
         <div class="form-group">
           <label for="username">Phone number</label>
-          <input type="text" id="phone_number" name="phone_number" onkeypress="return numberOnly(event)" maxlength="14" required="required"/>
+          <input type="text" id="phone_number" minlength="14" name="phone_number" onkeypress="return numberOnly(event)" maxlength="14" required="required"/>
         </div>
         <div class="form-group">
           <label for="username">Username</label>
@@ -73,7 +74,7 @@
           <input type="password" id="cpassword" name="cpassword" required="required"/>
         </div> 
         <div class="form-group">
-          <button type="submit">Register</button>
+          <button type="submit" onclick="register_()">Register</button>
         </div>
       </form>
     </div>
@@ -83,6 +84,17 @@
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='https://codepen.io/andytran/pen/vLmRVp.js'></script>
     <script  src="login_assets/js/index.js"></script>
+    <!-- swall alert starts here -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="sweetalert2.all.min.js"></script>
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 -->
+    <script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+
+    <script src="sweetalert2.min.js"></script>
+    <!-- swal ends here -->
 
     <script>
        //Numbers only for arithmetics
@@ -102,6 +114,136 @@
       $("input[name='phone_number']").keyup(function() {
           $(this).val($(this).val().replace(/^(\d{3})(\d{3})(\d)+$/, "($1) $2-$3"));
       });
+
+      //login 
+      $(document).on('submit', '#login_form', function(event) {
+          event.preventDefault();          
+            $.ajax({
+                url: "database/register_login/login.php",
+                method: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    if(data.includes(0)){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Incorrect username or password',
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                    }
+                    else if(data.includes(1)){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Login successful',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            location.href='dashboard.php';
+                        });
+                    }
+                    else if(data.includes(2)){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Account has been blocked. Contact Administrator for help',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                  }
+              })
+        
+        });
+        
+
+      //register
+      function register_(){
+        event.preventDefault();
+        var company_name  = $('#company_name').val();
+        var phone_number  = $('#phone_number').val();
+        var username      = $('#username').val();
+        var password      = $('#password').val();
+        var cpassword     = $('#cpassword').val();
+        
+        if(company_name == ""){
+           $("#company_name").focus();
+        }
+        else if(phone_number == ""){
+          $("#phone_number").focus();
+        }
+        else if(username == ""){
+          $("#username").focus();
+        }
+        else if(password != cpassword){
+          alert(password + "," + cpassword)
+          $("#password").focus();
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Password mismatch',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        }
+        else if(password.length < 8){
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Password length must be greater than 8',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        }
+        else{
+            $.ajax({
+                url: "database/register_login/register.php",
+                type: "POST",
+                data: {
+                  "company_name" : company_name,
+                  "phone_number" : phone_number,
+                  "username"     : username,
+                  "password"     : password
+                },
+                success: function(data) {
+                  // alert(data);
+                  if(data.includes("success")){
+                    $('#register_form')[0].reset();
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Registration complete. Login to proceed',
+                      showConfirmButton: false,
+                      timer: 2500,
+                    }).then((result) =>{
+                          location.reload();
+                        });
+                  }else{
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'error',
+                      title: data,
+                      showConfirmButton: false,
+                      timer: 2500,
+                    });
+                  }
+                }
+            })
+          }
+      }
     </script>
 </body>
 
