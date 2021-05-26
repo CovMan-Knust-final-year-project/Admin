@@ -1,8 +1,31 @@
 <?php 
+  session_start();
+  if(isset($_SESSION["id"])){
+  }else{
+      header('Location: index.php');
+  }
 
+  //operational mount points are denoted by 1
+  //non operational ones are denoted by 0
+
+  include_once 'database/config.php';
   include_once 'partials/header.php';
 
+  $org_id       = $_SESSION['id'];
+  $query        = "SELECT * FROM mount_point WHERE status = 1 AND org_id = :org_id";
+  $statement    = $con->prepare($query);
+  $statement->execute(
+      array(
+          ":org_id" => $org_id,
+      )
+  );
+
+  $count = $statement->rowCount();
+  $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+  $i = 1;
+
 ?>
+
 <div class="main-panel">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
@@ -40,67 +63,67 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table">
-                                    <thead class=" text-primary">
-                                        <th>
-                                            S/N
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <th>
-                                            Name of Venue
-                                        </th>
-                                        <th>
-                                            Date mounted
-                                        </th>
-                                        <th class='text-center'>
-                                            Actions
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success">Operational</span>
-                                            </td>
-                                            <td>
-                                                College of Science
-                                            </td>
-                                            <td>
-                                                2020-01-01
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" data-target="#editMountPointModal"><i
-                            class=" fa fa-pencil"></i></button>
-                                                <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
-                                            </td>
-                                        </tr>
+                               <?php if ($count > 0 && !empty($rows)) { ?>
+                                    <table class="table">
+                                        <thead class=" text-primary">
+                                            <th>
+                                                S/N
+                                            </th>
+                                            <th>
+                                                Status
+                                            </th>
+                                            <th>
+                                                Name of Venue
+                                            </th>
+                                            <th>
+                                                Date mounted
+                                            </th>
+                                            <th class='text-center'>
+                                                Actions
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                                foreach($rows as $results){?>
+                                                    <tr>
+                                                        <td>
+                                                            <?= $i; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php 
+                                                                if($results['operational_status'] == 0){ ?> <!--means that the hardware is not functional-->
+                                                                    <span class="badge badge-danger">Damaged</span>
+                                                                <?php 
 
-                                        <tr>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-danger">Damaged</span>
-                                            </td>
-                                            <td>
-                                                School of Business
-                                            </td>
-                                            <td>
-                                                2020-01-01
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" name="update" class="btn-sm btn-dark delete"><i
-                            class=" fa fa-pencil"></i></button>
-                                                <button type="button" name="delete" class="btn-sm btn-danger update" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+                                                                }else{?>
+                                                                    <!-- hardware is functional -->
+                                                                    <span class="badge badge-success">Operational</span>
+                                                                <?php
+                                                                }
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $results['venue']?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $results['timestamp_']?>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" data-target="#editMountPointModal"><i
+                                        class=" fa fa-pencil"></i></button>
+                                                            <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                            <?php
+                                                $i++;}
+                                            ?>
+                                        </tbody>
+                                    </table>
+                               <?php }else{ ?>
+                                   <!-- no items in the database -->
+                                   <h3 class="text-center"> No mount point yet</h3>
+                               <?php } ?>
+                                
                             </div>
                         </div>
                     </div>
@@ -131,6 +154,7 @@
                             showConfirmButton: false,
                             timer: 2500
                         }).then((result) => {
+                            $('#add_mount_point_form')[0].reset();
                             location.reload();
                         });
                     }

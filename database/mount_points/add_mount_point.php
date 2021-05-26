@@ -18,7 +18,7 @@
 
         //status 0 means that the item has been deleted; 1 means the item is active.
         if ($count == 0) {
-            $add_query      = "INSERT INTO mount_point(status, org_id, venue, timestamp_) VALUES(1, :org_id, :venue, :timestamp_)";
+            $add_query      = "INSERT INTO mount_point(status, operational_status, org_id, venue, timestamp_) VALUES(1, 1, :org_id, :venue, :timestamp_)";
             $add_statement  = $con->prepare($add_query);
             $added = $add_statement->execute(
                 array(
