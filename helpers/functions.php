@@ -35,5 +35,8 @@
         return $the_number;
     }
 
+    function dateFormat($date){
+        return date('l, M j, Y', strtotime($date));
+    }
 
 ?>

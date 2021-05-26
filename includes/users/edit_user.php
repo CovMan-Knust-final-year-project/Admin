@@ -9,7 +9,7 @@
                 </button>
             </div>
 
-            <form method="POST" enctype="multipart/form-data" id="personal_info">
+            <form method="POST" enctype="multipart/form-data" id="edit_personal_info">
                 <div class="card-body">
                     <div class="row row-space">
                         <div class="col-4">
@@ -41,14 +41,14 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="input-select" class="control-label">First name</label>
-                                <input class="form-control prc" type="text" name="f_name" id="f_name">
+                                <input class="form-control prc" type="text" name="edit_f_name" id="edit_f_name">
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="address-number" class="control-label">Last_name</label>
-                                <input class="form-control prc" type="text" name="l_name" id="l_name">
+                                <input class="form-control prc" type="text" name="edit_l_name" id="edit_l_name">
                             </div>
                         </div>
                     </div>
@@ -57,14 +57,14 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="input-select" class="control-label">Date of birth</label>
-                                <input class="form-control prc" type="date" name="dob" id="dob">
+                                <input class="form-control prc" type="date" name="edit_dob" id="edit_dob">
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="address-number" class="control-label">Phone number</label>
-                                <input class="form-control prc" type="text" name="phone_number" id="phone_number" maxlength="14" onkeypress="return numberOnly(event)">
+                                <input class="form-control prc" type="text" name="edit_phone_number" id="edit_phone_number" maxlength="14" onkeypress="return numberOnly(event)">
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="input-select" class="control-label">Level</label>
-                                <input class="form-control prc" type="text" name="level" id="level" onkeypress="return numberOnly(event)">
+                                <input class="form-control prc" type="text" name="edit_level" id="edit_level" onkeypress="return numberOnly(event)">
                             </div>
                         </div>
 
