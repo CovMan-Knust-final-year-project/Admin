@@ -21,7 +21,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="input-select" class="control-label">Venue Name</label>
-                                <input class="form-control prc" type="text" name="venue_name" id="venue_name">
+                                <input class="form-control prc" type="text" name="venue_name" id="venue_name" required>
                             </div>
                         </div>
                         <div class="col-4">

@@ -14,8 +14,8 @@
         <?php include_once 'partials/navbar.php';?>
     
     <!-- adding the popup modal -->
-    <?php include_once 'includes/add_mount_point.php';?>
-    <?php include_once 'includes/edit_mount_point.php';?>
+    <?php include_once 'includes/mount_points/add_mount_point.php';?>
+    <?php include_once 'includes/mount_points/edit_mount_point.php';?>
 
     <!-- End Navbar -->
     <div class="content">
@@ -110,36 +110,43 @@
     </div>
     <?php include_once 'partials/footer.php'?>
     <script>
-     //Numbers only for arithmetics
-    function numberOnly(e) {
-        var arr = "1234567890";
-        var code;
-        if (window.event)
-            code = e.keyCode;
-        else
-            code = e.which;
-        var char = keychar = String.fromCharCode(code);
-        if (arr.indexOf(char) == -1)
-            return false;
-    }
 
-    //format phone number
-    $("input[name='phone_number']").keyup(function() {
-        $(this).val($(this).val().replace(/^(\d{3})(\d{3})(\d)+$/, "($1) $2-$3"));
-    });
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                $('.your_picture_image')
-                    .attr('src', e.target.result);
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    //add mount point 
+    $(document).on('submit', '#add_mount_point_form', function(event) {
+          event.preventDefault();       
+            $.ajax({
+                url: "database/mount_points/add_mount_point.php",
+                method: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    // alert(data);
+                    if(data.includes("success")){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Mount point added',
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                  }
+              })
+        
+        });
 
     function deleteUser(){
         Swal.fire({
