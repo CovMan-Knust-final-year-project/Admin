@@ -41,14 +41,14 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="input-select" class="control-label">First name</label>
-                                <input class="form-control prc" type="text" name="f_name" id="f_name">
+                                <input class="form-control prc" type="text" name="f_name" id="f_name" required>
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="address-number" class="control-label">Last_name</label>
-                                <input class="form-control prc" type="text" name="l_name" id="l_name">
+                                <input class="form-control prc" type="text" name="l_name" id="l_name" required>
                             </div>
                         </div>
                     </div>
@@ -57,14 +57,14 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="input-select" class="control-label">Date of birth</label>
-                                <input class="form-control prc" type="date" name="dob" id="dob">
+                                <input class="form-control prc" type="date" name="dob" id="dob" required>
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="address-number" class="control-label">Phone number</label>
-                                <input class="form-control prc" type="text" name="phone_number" id="phone_number" maxlength="14" onkeypress="return numberOnly(event)">
+                                <input class="form-control prc" type="text" name="phone_number" id="phone_number" maxlength="14" onkeypress="return numberOnly(event)" required>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="input-select" class="control-label">Level</label>
-                                <input class="form-control prc" type="text" name="level" id="level" onkeypress="return numberOnly(event)">
+                                <input class="form-control prc" type="text" name="level" id="level" onkeypress="return numberOnly(event)" required>
                             </div>
                         </div>
 

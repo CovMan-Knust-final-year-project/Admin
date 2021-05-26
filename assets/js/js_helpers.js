@@ -23,3 +23,16 @@ function getCookie(name) {
 function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=-99999999;';
 }
+
+ //Numbers only for arithmetics
+ function numberOnly(e) {
+    var arr = "1234567890";
+    var code;
+    if (window.event)
+        code = e.keyCode;
+    else
+        code = e.which;
+    var char = keychar = String.fromCharCode(code);
+    if (arr.indexOf(char) == -1)
+        return false;
+}

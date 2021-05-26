@@ -1,6 +1,27 @@
 <?php 
 
-  include_once 'partials/header.php';
+    session_start();
+    if(isset($_SESSION["id"])){
+    }else{
+        header('Location: index.php');
+    }
+
+    include_once 'database/config.php';
+    include_once 'partials/header.php';
+    include_once 'helpers/functions.php';  
+
+    $org_id       = $_SESSION['id'];
+    $query        = "SELECT * FROM users WHERE status = 1 AND org_id = :org_id";
+    $statement    = $con->prepare($query);
+    $statement->execute(
+        array(
+            ":org_id" => $org_id,
+        )
+    );
+  
+    $count = $statement->rowCount();
+    $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $i = 1;
 
 ?>
 <div class="main-panel">
@@ -14,8 +35,8 @@
         <?php include_once 'partials/navbar.php';?>
     
     <!-- adding the popup modal -->
-    <?php include_once 'includes/add_user.php';?>
-    <?php include_once 'includes/edit_user.php';?>
+    <?php include_once 'includes/users/add_user.php';?>
+    <?php include_once 'includes/users/edit_user.php';?>
 
     <!-- End Navbar -->
     <div class="content">
@@ -40,85 +61,72 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table">
-                                    <thead class=" text-primary">
-                                        <th>
-                                            S/N
-                                        </th>
-                                        <th>
-                                            Image
-                                        </th>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Dob
-                                        </th>
-                                        <th>
-                                            Phone number
-                                        </th>
-                                        <th>
-                                            Level
-                                        </th>
-                                        <th class="text-center">
-                                            Action
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg" data-holder-rendered="true" width="15%">
-                                            </td>
-                                            <td>
-                                                Minerva Hooper
-                                            </td>
-                                            <td>
-                                                2020-01-01
-                                            </td>
-                                            <td class="text-primary">
-                                                (026) 897-7129
-                                            </td>
-                                            <td class="text-primary">
-                                                200
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" data-target="#editaccountModal"><i
-                            class=" fa fa-pencil"></i></button>
-                                                <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
-                                            </td>
-                                        </tr>
+                                <?php if ($count > 0 && !empty($rows)) { ?>
+                                    <table class="table">
+                                        <thead class=" text-primary">
+                                            <th>
+                                                S/N
+                                            </th>
+                                            <th>
+                                                Image
+                                            </th>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Dob
+                                            </th>
+                                            <th>
+                                                Phone number
+                                            </th>
+                                            <th>
+                                                Level
+                                            </th>
+                                            <th class="text-center">
+                                                Action
+                                            </th>
+                                        </thead>
+                                        <tbody>
 
-                                        <tr>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                                <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg" data-holder-rendered="true" width="15%">
-                                            </td>
-                                            <td>
-                                                Hipman Heart
-                                            </td>
-                                            <td>
-                                                2020-01-01
-                                            </td>
-                                            <td class="text-primary">
-                                                (026) 897-7129
-                                            </td>
-                                            <td class="text-primary">
-                                                400
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" name="update" class="btn-sm btn-dark delete"><i
-                            class=" fa fa-pencil"></i></button>
-                                                <button type="button" name="delete" class="btn-sm btn-danger update" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+                                            <?php
+                                               foreach($rows as $results){?>
+                                                  <tr>
+                                                    <td>
+                                                        <?= $i; ?>
+                                                    </td>
+                                                    <td>
+                                                        <img class="rounded-circle z-depth-2" alt="100x100" src="assets/img/members/<?= $results['image']?>" data-holder-rendered="true" width="50" height="50">
+                                                    </td>
+                                                    <td>
+                                                        <?= $results['first_name'] . ' ' . $results['last_name']?>
+                                                    </td>
+                                                    <td>
+                                                        <?= dateFormat($results['dob']); ?>
+                                                    </td>
+                                                    <td class="text-primary">
+                                                        <?= addBracketsToPhone($results['phone_number'])?>
+                                                    </td>
+                                                    <td class="text-primary">
+                                                        200
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" onclick="edit_user(<?= $results['id'];?>)" data-target="#editaccountModal"><i
+                                    class=" fa fa-pencil"></i></button>
+                                                        <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                            <?php
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                <?php
+                                    }else{?>
+                                        <h3>No Users Yet</h3>
+                                    <?php
+                                    }
+                                ?>
+                                
                             </div>
                         </div>
                     </div>
@@ -127,19 +135,8 @@
         </div>
     </div>
     <?php include_once 'partials/footer.php'?>
+    <script src="assets/js/js_helpers.js"></script>
     <script>
-     //Numbers only for arithmetics
-    function numberOnly(e) {
-        var arr = "1234567890";
-        var code;
-        if (window.event)
-            code = e.keyCode;
-        else
-            code = e.which;
-        var char = keychar = String.fromCharCode(code);
-        if (arr.indexOf(char) == -1)
-            return false;
-    }
 
     //format phone number
     $("input[name='phone_number']").keyup(function() {
@@ -158,6 +155,104 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    $(document).on('submit', '#personal_info', function(event) {
+        event.preventDefault();       
+            $.ajax({
+                url: "database/users/add_user.php",
+                method: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    // alert(data);
+                    if(data.includes("success")){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'User added successfully',
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            $('#personal_info')[0].reset();
+                            location.reload();
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                  }
+              })
+    });
+
+    function edit_user(id){
+        fetch_user(id);
+        setCookie('edit_id', id, 1);
+    }
+
+    function fetch_user(id){
+        $.ajax({
+            url: "database/users/fetch_user.php",
+            method: "POST",
+            dataType: "json",
+            data:{
+                "id" : id,
+            }, 
+            success: function(data) {
+                // alert(data);
+                $("#your_picture").attr("src","assets/img/members/"+data.image);
+                $('#edit_f_name').val(data.first_name);
+                $('#edit_l_name').val(data.last_name);
+                $('#edit_dob').val(data.dob);
+                $('#edit_phone_number').val(data.phone_number);
+                $('#edit_level').val(data.level);
+            }
+        })
+    }
+
+    //edit mount point 
+    $(document).on('submit', '#edit_personal_info', function(event) {
+        event.preventDefault();       
+            $.ajax({
+                url: "database/users/edit_user.php",
+                method: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    // alert(data);
+                    if(data.includes("success")){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'User editted',
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                }
+            })
+        
+        });
 
     function deleteUser(){
         Swal.fire({

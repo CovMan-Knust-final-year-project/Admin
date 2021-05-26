@@ -10,6 +10,7 @@
 
   include_once 'database/config.php';
   include_once 'partials/header.php';
+  include_once 'helpers/functions.php';
 
   $org_id       = $_SESSION['id'];
   $query        = "SELECT * FROM mount_point WHERE status = 1 AND org_id = :org_id";
@@ -106,7 +107,7 @@
                                                             <?= $results['venue']?>
                                                         </td>
                                                         <td>
-                                                            <?= $results['timestamp_']?>
+                                                            <?= dateFormat($results['timestamp_'])?>
                                                         </td>
                                                         <td class="text-center">
                                                             <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" onclick="fetch_data(<?= $results['id'] ?>)" data-target="#editMountPointModal"><i
