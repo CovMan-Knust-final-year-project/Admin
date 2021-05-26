@@ -34,7 +34,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                             <a class="dropdown-item" href="./admin_info.php">Admin Info</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item bg-danger" onclick="Logout()">Log out</a>
+                            <a class="dropdown-item bg-danger" onclick="Logout()" style="cursor:pointer">Log out</a>
                         </div>
                     </li>
                 </ul>

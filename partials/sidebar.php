@@ -51,7 +51,7 @@
               <p>Notifications</p>
             </a>
           </li> -->
-           <li class="nav-item" onclick="Logout()">
+           <li class="nav-item" onclick="Logout()" style="cursor:pointer;">
             <a class="nav-link">
             <i class="text-danger material-icons">logout</i>
                 <p class="text-danger">Logout</p>
