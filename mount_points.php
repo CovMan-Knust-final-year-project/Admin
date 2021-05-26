@@ -109,7 +109,7 @@
                                                             <?= $results['timestamp_']?>
                                                         </td>
                                                         <td class="text-center">
-                                                            <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" data-target="#editMountPointModal"><i
+                                                            <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" onclick="fetch_data(<?= $results['id'] ?>)" data-target="#editMountPointModal"><i
                                         class=" fa fa-pencil"></i></button>
                                                             <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
                                                         </td>
@@ -132,6 +132,7 @@
         </div>
     </div>
     <?php include_once 'partials/footer.php'?>
+    <script src="assets/js/js_helpers.js"></script>
     <script>
 
     //add mount point 
@@ -171,6 +172,62 @@
               })
         
         });
+
+        function fetch_data(id){
+            fetch_name(id);
+            setCookie('edit_id', id, 1);
+        }
+
+        function fetch_name(id){
+            $.ajax({
+                url: "database/mount_points/fetch_mount_name.php",
+                method: "POST",
+                data:{
+                    "id" : id,
+                }, 
+                success: function(data) {
+                    $('#edit_venue_name').val(data);
+                }
+            })
+        }
+
+        //edit mount point 
+        $(document).on('submit', '#edit_mount_point_form', function(event) {
+            event.preventDefault();       
+                $.ajax({
+                    url: "database/mount_points/edit_mount_point.php",
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        // alert(data);
+                        if(data.includes("success")){
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Mount point editted',
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: data,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    }
+                })
+            
+            });
+
 
     function deleteUser(){
         Swal.fire({

@@ -9,7 +9,7 @@
                 </button>
             </div>
 
-            <form method="POST" enctype="multipart/form-data" id="add_mount_point_form">
+            <form method="POST" enctype="multipart/form-data" id="edit_mount_point_form">
                 <div class="card-body">
                     <div class="row row-space">
                         <div class="col-4">
@@ -21,7 +21,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="input-select" class="control-label">Venue Name</label>
-                                <input class="form-control prc" type="text" name="venue_name" id="venue_name">
+                                <input class="form-control prc" type="text" name="edit_venue_name" id="edit_venue_name" required>
                             </div>
                         </div>
                         <div class="col-4">
