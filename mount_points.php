@@ -111,7 +111,7 @@
                                                         <td class="text-center">
                                                             <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" onclick="fetch_data(<?= $results['id'] ?>)" data-target="#editMountPointModal"><i
                                         class=" fa fa-pencil"></i></button>
-                                                            <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
+                                                            <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser(<?= $results['id']; ?>)"><i class="fa fa-trash"></i></button>
                                                         </td>
                                                     </tr>
                                             <?php
@@ -229,7 +229,7 @@
             });
 
 
-    function deleteUser(){
+    function deleteUser(id){
         Swal.fire({
                 title: 'Delete?',
                 text: 'You won\'t be able to revert this!',
@@ -241,17 +241,17 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "database/deleteuser.php",
+                        url: "database/mount_points/delete_mount_point.php",
                         method: "POST",
                         data: {
-                            // "id" : id, 
+                            "id" : id, 
                         },
                         success: function(data) {
                         //    alert(data);
-                        if(data=='success'){
+                        if(data.includes('success')){
                             Swal.fire(
                                 'Deleted!',
-                                'User has been deleted.',
+                                'Mount point has been deleted.',
                                 'success'
                             ).then((result) =>{
                                 location.reload();
