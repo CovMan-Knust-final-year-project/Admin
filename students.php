@@ -112,7 +112,7 @@
                                                     <td class="text-center">
                                                         <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" onclick="edit_user(<?= $results['id'];?>)" data-target="#editaccountModal"><i
                                     class=" fa fa-pencil"></i></button>
-                                                        <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
+                                                        <button type="button" name="delete" class="btn-sm btn-danger update" onclick="deleteUser(<?= $results['id'];?>)"><i class="fa fa-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             <?php
@@ -122,7 +122,7 @@
                                     </table>
                                 <?php
                                     }else{?>
-                                        <h3>No Users Yet</h3>
+                                        <h3 class="text-center">No Users Yet</h3>
                                     <?php
                                     }
                                 ?>
@@ -254,7 +254,7 @@
         
         });
 
-    function deleteUser(){
+    function deleteUser(id){
         Swal.fire({
                 title: 'Delete?',
                 text: 'You won\'t be able to revert this!',
@@ -266,14 +266,14 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "database/deleteuser.php",
+                        url: "database/users/delete_user.php",
                         method: "POST",
                         data: {
-                            // "id" : id, 
+                            "id" : id, 
                         },
                         success: function(data) {
                         //    alert(data);
-                        if(data=='success'){
+                        if(data.includes('success')){
                             Swal.fire(
                                 'Deleted!',
                                 'User has been deleted.',
