@@ -107,11 +107,10 @@
                                                     </td>
                                                     <td class="text-center">
                                     
-                                                        <button type="button" name="update" class="btn-sm btn-dark" data-toggle="modal" data-target="#sendMessageModal" onclick="saveUserId(<?= $results['user_id']?>)"><i
-                                                                class=" fa fa-envelope"></i></button>
+                                                        <button type="button" name="update" class="btn-sm btn-dark" data-toggle="modal" data-target="#sendMessageModal" onclick="saveUserId(<?= $results['user_id']?>)"><i class=" fa fa-envelope"></i></button>
                                                         <?php
                                                             if($results['status'] == 1){?>
-                                                                <button type="button" name="delete" class="btn-sm btn-danger update" data-toggle="modal" onclick="callAmbulance()"
+                                                                <button type="button" name="delete" class="btn-sm btn-danger update" data-toggle="modal" onclick="callAmbulance(<?= $results['user_id']?>,<?= $results['id']?>,<?= $results['mount_point_id']?>)"
                                                                     data-target="#authoritiesModal"><i class="fa fa-ambulance"></i></button>
                                                         <?php
                                                             }
@@ -186,7 +185,7 @@
                 })
         });
 
-        function callAmbulance(id){
+        function callAmbulance(user_id, scan_id, mount_point){
         Swal.fire({
                 title: 'Call Ambulance?',
                 text: 'Are you sure you want to transfer this student to the hospital?',
@@ -198,14 +197,16 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "database/call_ambulance.php",
+                        url: "database/scans/notify_hospital.php",
                         method: "POST",
                         data: {
-                            "id" : id, 
+                            "user_id"     : user_id, 
+                            "scan_id"     : scan_id,
+                            "mount_point" : mount_point,
                         },
                         success: function(data) {
                         //    alert(data);
-                        if(data=='success'){
+                        if(data.includes('success')){
                             Swal.fire(
                                 'Ambulance called!',
                                 'Hospital has been notified.',
