@@ -39,4 +39,17 @@
         return date('l, M j, Y', strtotime($date));
     }
 
+    function fetchUserDetailsFromID($con, $id, $scope){
+        $query = "SELECT * FROM users WHERE id = :id";
+        $statement = $con->prepare($query);
+
+        $statement->execute(
+            array(
+                ":id" => $id,
+            )
+        );
+
+        $result = $statement->fetch();
+        return $result[$scope];
+    }
 ?>
