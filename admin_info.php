@@ -1,4 +1,28 @@
-<?php include_once 'partials/header.php'?>
+<?php 
+     session_start();
+     if(isset($_SESSION["id"])){
+     }else{
+         header('Location: index.php');
+     }
+ 
+     //positive are denoted by 1
+     //negative cases are denoted by 0
+ 
+     include_once 'database/config.php';
+     include_once 'partials/header.php';
+     include_once 'helpers/functions.php';
+ 
+     $org_id       = $_SESSION['id'];
+     $query        = "SELECT * FROM admin WHERE id = :org_id";
+     $statement    = $con->prepare($query);
+     $statement->execute(
+         array(
+             ":org_id" => $org_id,
+         )
+     );
+
+     $results = $statement->fetch();
+?>
 
         <div class="main-panel">
             <!-- Navbar -->
@@ -22,12 +46,12 @@
                                     <!-- <p class="card-category">Complete your profile</p> -->
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form method="POST" enctype="multipart/form-data" id="admin_form">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Company</label>
-                                                    <input type="text" class="form-control" value="Kwame Nkrumah University Of Science And Technology" disabled>
+                                                    <input type="text" class="form-control" name="company_name" id="company_name" value="<?= $_SESSION['company_name']?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -35,13 +59,21 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Username</label>
-                                                    <input type="text" class="form-control" value="admin">
+                                                    <input type="text" class="form-control" value="<?= $_SESSION['username']?>" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Email</label>
-                                                    <input type="text" class="form-control" value="info@knust.com.gh">
+                                                    <input type="text" class="form-control" name="email" id="email" value="<?= empty($results['email']) ? 'None' : $results['email'];?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Phone number</label>
+                                                    <input type="text" class="form-control" name="phone_number" id="phone_number" value="<?= addBracketsToPhone($results['phone_number']);?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -49,7 +81,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Address</label>
-                                                    <input type="text" class="form-control" value="Kumasi, Ghana">
+                                                    <input type="text" class="form-control" name="address" id="address" value="<?= empty($results['address']) ? 'None' : $results['address'];?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,3 +123,40 @@
                 </div>
             </div>
            <?php require_once 'partials/footer.php'?>
+           <script>
+            //update admin information
+                $(document).on('submit', '#admin_form', function(event) {
+                    event.preventDefault();       
+                        $.ajax({
+                            url: "database/admin/edit_admin_details.php",
+                            method: "POST",
+                            data: new FormData(this),
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function(data) {
+                                // alert(data);
+                                if(data.includes("success")){
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'Details updated successfully',
+                                        showConfirmButton: false,
+                                        timer: 2500
+                                    }).then((result) => {
+                                        location.reload();
+                                    });
+                                }
+                                else {
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'error',
+                                        title: data,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                }
+                            }
+                        })
+                });
+           </script>

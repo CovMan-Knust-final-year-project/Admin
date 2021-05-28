@@ -1,4 +1,31 @@
-<?php include_once 'partials/header.php'?>
+<?php 
+
+    session_start();
+    if(isset($_SESSION["id"])){
+    }else{
+        header('Location: index.php');
+    }
+
+    //positive are denoted by 1
+    //negative cases are denoted by 0
+
+    include_once 'database/config.php';
+    include_once 'partials/header.php';
+    include_once 'helpers/functions.php';
+
+    $org_id       = $_SESSION['id'];
+    $query        = "SELECT * FROM attendance WHERE org_id = :org_id";
+    $statement    = $con->prepare($query);
+    $statement->execute(
+        array(
+            ":org_id" => $org_id,
+        )
+    );
+
+    $count = $statement->rowCount();
+    $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $i = 1;    
+?>
 
 
 <div class="main-panel">
@@ -24,85 +51,64 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table">
-                                    <thead class=" text-primary">
-                                        <th>
-                                            S/N
-                                        </th>
-                                        <th>
-                                            Date
-                                        </th>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Venue
-                                        </th>
-                                        <th>
-                                            Time
-                                        </th>
-                                        <!-- <th class="text-center">
-                                            Action
-                                        </th> -->
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                1st June, 2021
-                                            </td>
-                                            <td>
-                                                Niger Hill
-                                            </td>
-                                            <td>
-                                                College Of Science
-                                            </td>
-                                            <td class="text-primary">
-                                                03:30pm
-                                                <!-- <script>
-                                                    document.write(new Date());
-                                                </script> -->
-                                            </td>
-                                            <!-- <td class="text-center">
-                                                <button type="button" name="update" class="btn-sm btn-dark"><i
-                                                        class=" fa fa-envelope"></i></button> -->
-                                                <!-- <button type="button" name="delete" class="btn-sm btn-danger update" data-toggle="modal"
-                                                data-target="#authoritiesModal"><i class="fa fa-ambulance"></i></button> -->
-                                            <!-- </td> -->
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                                23rd May, 2021
-                                            </td>
-                                            <td>
-                                                Johnny English
-                                            </td>
-                                            <td>
-                                                School of Business
-                                            </td>
-                                            <td class="text-primary">
-                                                08:50am
-                                                <!-- <script>
-                                                    document.write(new Date());
-                                                </script>
-                                            </td> -->
-                                            <!-- <td class="text-center">
-                                                <button type="button" name="update" class="btn-sm btn-dark"><i
-                                                        class=" fa fa-envelope"></i></button>
-                                                <button type="button" name="delete" class="btn-sm btn-danger update" onclick="callAmbulance()"><i
-                                                        class="fa fa-ambulance"></i></button>
-                                            </td> -->
-                                        </tr>
-
-
-                                    </tbody>
-                                </table>
+                                <?php if ($count > 0 && !empty($rows)) { ?>
+                                    <table class="table">
+                                        <thead class=" text-primary">
+                                            <th>
+                                                S/N
+                                            </th>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Venue
+                                            </th>
+                                            <th>
+                                                Time
+                                            </th>
+                                            <!-- <th class="text-center">
+                                                Action
+                                            </th> -->
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach($rows as $results){ ?>
+                                                <tr>
+                                                    <td>
+                                                        <?= $i; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= dateFormat($results['date_marked']) ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= fetchUserDetailsFromID($con, $results['user_id'], 'first_name') .' '. fetchUserDetailsFromID($con, $results['user_id'], 'last_name') ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= fetchMountPointDetailsFromID($con, $results['venue'], 'venue')?>
+                                                    </td>
+                                                    <td class="text-primary">
+                                                        <?= $results['time_marked']; ?>
+                                                    </td>
+                                                    <!-- <td class="text-center">
+                                                        <button type="button" name="update" class="btn-sm btn-dark"><i
+                                                                class=" fa fa-envelope"></i></button> -->
+                                                        <!-- <button type="button" name="delete" class="btn-sm btn-danger update" data-toggle="modal"
+                                                        data-target="#authoritiesModal"><i class="fa fa-ambulance"></i></button> -->
+                                                    <!-- </td> -->
+                                                </tr>
+                                            <?php
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                <?php 
+                                    }else{?>
+                                        <h3>No attendance Yet</h3>
+                                <?php 
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -112,38 +118,3 @@
         </div>
     </div>
     <?php include_once 'partials/footer.php'?>
-    <script>
-        function callAmbulance(id){
-        Swal.fire({
-                title: 'Call Ambulance?',
-                text: 'Are you sure you want to transfer this student to the hospital?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, do it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "database/call_ambulance.php",
-                        method: "POST",
-                        data: {
-                            "id" : id, 
-                        },
-                        success: function(data) {
-                        //    alert(data);
-                        if(data=='success'){
-                            Swal.fire(
-                                'Ambulance called!',
-                                'Hospital has been notified.',
-                                'success'
-                            ).then((result) =>{
-                                location.reload();
-                            })
-                          }
-                        }
-                    });
-                }
-            })
-    }
-    </script>
