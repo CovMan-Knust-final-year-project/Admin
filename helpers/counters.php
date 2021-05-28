@@ -58,7 +58,12 @@
     }
 
     function CountAllScans($con, $from_table){
-        $query = "SELECT * FROM $from_table";
+        if($from_table == 'users'){
+            $query = "SELECT * FROM $from_table WHERE status = 1";
+        }
+        else{
+            $query = "SELECT * FROM $from_table";
+        }
         $statement = $con->prepare($query);
 
         $statement->execute();
