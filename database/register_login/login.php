@@ -29,7 +29,7 @@
         $_SESSION['phone_number']   = $user['phone_number'];
         //   header('Location: user_dashboard/dashboard.php');
         echo "1"; //successful
-        // sendSms($user['phone_number'], 'Login attempt was noticed today at ' . date('Y-m-d H:i:s') . ". If this wasn't you contact customer care NOW on 0268977129 to rectify the issue. Thanks");
+        sendSms($user['phone_number'], 'Login attempt was noticed today at ' . date('Y-m-d H:i:s') . ". If this wasn't you contact customer care NOW on 0268977129 to rectify the issue. Thanks");
         } else {
             echo "2";// blocked account
         //   $response = '<div class="alert alert-danger text-center">You account has been blocked. Please contact support</div>';
