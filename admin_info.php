@@ -114,7 +114,7 @@
                                     <h4 class="card-title">JESSE ANIM & OWUSU KONADU YIADOM JULIEEN</h4>
                                     <p class="card-description">
                                     The aim of CovMan is to completely replace and automatize all checks that have to be done due to COVID-19                                    </p>
-                                    <a href="javascript:;" class="btn btn-primary btn-round">Contact CovMan</a>
+                                    <a href="mailto:support@covman.com.gh" class="btn btn-primary btn-round">Contact CovMan</a>
                                     <a href="javascript:;" class="btn btn-dark btn-round">Download User App</a>
                                 </div>
                             </div>

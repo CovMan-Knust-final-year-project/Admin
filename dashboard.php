@@ -6,7 +6,22 @@
       header('Location:index.php');
   }
   include_once 'partials/header.php';
+  include_once 'database/config.php';
+  include_once 'helpers/functions.php';
+  include_once 'helpers/counters.php';
 
+    $org_id       = $_SESSION['id'];
+    $query        = "SELECT * FROM scans WHERE org_id = :org_id LIMIT 2";
+    $statement    = $con->prepare($query);
+    $statement->execute(
+        array(
+            ":org_id" => $org_id,
+        )
+    );
+
+    $count = $statement->rowCount();
+    $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $i = 1;
 ?>
 
 <div class="main-panel">
@@ -33,7 +48,7 @@
                                 <i class="material-icons">scanner</i>
                             </div>
                             <p class="card-category">Scans</p>
-                            <h3 class="card-title">100
+                            <h3 class="card-title"><?= countDailyScan($con);?>
                                 <small></small>
                             </h3>
                         </div>
@@ -52,7 +67,7 @@
                                 <i class="fa fa-fire"></i>
                             </div>
                             <p class="card-category">Highest temperature</p>
-                            <h3 class="card-title">0&#176;C</h3>
+                            <h3 class="card-title"><?= fetchDailyMaxtemperature($con);?>&#176;C</h3>
                         </div>
                         <div class="card-footer">
                             <div class="stats">
@@ -68,7 +83,7 @@
                                 <i class="material-icons">info_outline</i>
                             </div>
                             <p class="card-category">Positive cases</p>
-                            <h3 class="card-title">0</h3>
+                            <h3 class="card-title"><?= countPositiveCases($con); ?></h3>
                         </div>
                         <div class="card-footer">
                             <div class="stats">
@@ -84,7 +99,7 @@
                                 <i class="fa fa-check"></i>
                             </div>
                             <p class="card-category">Negative cases</p>
-                            <h3 class="card-title">0</h3>
+                            <h3 class="card-title"><?= countNegativeCases($con);?></h3>
                         </div>
                         <div class="card-footer">
                             <div class="stats">
@@ -158,31 +173,39 @@
                             </p>
                         </div>
                         <div class="card-body table-responsive">
-                            <table class="table table-hover">
-                                <thead class="text-warning">
-                                    <th>S/N</th>
-                                    <th>Name</th>
-                                    <th>Venue</th>
-                                    <th>Temperature</th>
-                                    <th>Time</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dakota Rice</td>
-                                        <td>COS</td>
-                                        <td>36&#176;C</td>
-                                        <td>16:04</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Minerva Hooper</td>
-                                        <td>KSB</td>
-                                        <td>34&#176;C</td>
-                                        <td>16:44</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <?php if ($count > 0 && !empty($rows)) { ?>
+                                <table class="table table-hover">
+                                    <thead class="text-warning">
+                                        <th>S/N</th>
+                                        <th>Name</th>
+                                        <th>Venue</th>
+                                        <th>Temperature</th>
+                                        <th>Time</th>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($rows as $results){ ?>
+                                            <tr>
+                                                <td><?= $i;?></td>
+                                                <td>
+                                                    <!--firstname --> <?= fetchUserDetailsFromID($con, $results['user_id'],'first_name'); ?> <!-- lastname--> <?= fetchUserDetailsFromID($con, $results['user_id'],'last_name'); ?>
+                                                </td>
+                                                <td><?= fetchMountPointDetailsFromID($con, $results['mount_point_id'], 'venue');?></td>
+                                                <td><?=$results['temperature']?>&#176;C</td>
+                                                <td>
+                                                  <?=dateFormat($results['date_scanned']);?> at <?=$results['time_scanned'];?>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                            $i++;}
+                                        ?>
+                                    </tbody>
+                                </table>
+                            <?php
+                                }else{?>
+                                    <h3 class="text-center">No scans Yet</h3>
+                            <?php
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -197,11 +220,11 @@
                                 <i class="material-icons">person_outline</i>
                             </div>
                             <p class="card-category">Total Students</p>
-                            <h3 class="card-title">200</h3>
+                            <h3 class="card-title"><?=CountAllScans($con, 'users')?></h3>
                         </div>
                         <div class="card-footer">
                             <div class="stats">
-                                <i class="material-icons">update</i> Last Updated (2020-01-01)
+                                <i class="material-icons">update</i> Last Updated (<?= dateFormat(fetchLatestUpdateDate_users($con, 'users'))?>)
                             </div>
                         </div>
                     </div>
@@ -213,11 +236,11 @@
                                 <i class="fa fa-qrcode"></i>
                             </div>
                             <p class="card-category">Total Scans</p>
-                            <h3 class="card-title">0</h3>
+                            <h3 class="card-title"><?=CountAllScans($con, 'scans')?></h3>
                         </div>
                         <div class="card-footer">
                             <div class="stats">
-                                <i class="material-icons">update</i> Last Updated (2020-01-01)
+                                <i class="material-icons">update</i> Last Updated (<?= dateFormat(fetchLatestUpdateDate_scans($con, 'scans'))?>)
                             </div>
                         </div>
                     </div>
@@ -229,11 +252,11 @@
                                 <i class="material-icons">info_outline</i>
                             </div>
                             <p class="card-category">Total cases</p>
-                            <h3 class="card-title">0</h3>
+                            <h3 class="card-title"><?=CountAllScans($con, 'cases')?></h3>
                         </div>
                         <div class="card-footer">
                             <div class="stats">
-                                <i class="material-icons">update</i> Last Updated (2020-01-01)
+                                <i class="material-icons">update</i> Last Updated (<?= dateFormat(fetchLatestUpdateDate_cases($con, 'cases'))?>)
                             </div>
                         </div>
                     </div>
