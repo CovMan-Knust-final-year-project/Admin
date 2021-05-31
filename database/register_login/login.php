@@ -7,7 +7,8 @@
     if (isset($_POST["login_username"]) && isset($_POST["login_password"])) {
 
     $password = trim($_POST['login_password']);
-
+    
+    //status 1 means the person is active, 0 means the person is deleted
     $sql = "SELECT * FROM admin WHERE username = :username AND password = :password AND status = 1";
     $statement = $con->prepare($sql);
     $statement->execute(
@@ -29,7 +30,7 @@
         $_SESSION['phone_number']   = $user['phone_number'];
         //   header('Location: user_dashboard/dashboard.php');
         echo "1"; //successful
-        sendSms($user['phone_number'], 'Login attempt was noticed today at ' . date('Y-m-d H:i:s') . ". If this wasn't you contact customer care NOW on 0268977129 to rectify the issue. Thanks");
+        // sendSms($user['phone_number'], 'Login attempt was noticed today at ' . date('Y-m-d H:i:s') . ". If this wasn't you contact customer care NOW on 0268977129 to rectify the issue. Thanks");
         } else {
             echo "2";// blocked account
         //   $response = '<div class="alert alert-danger text-center">You account has been blocked. Please contact support</div>';

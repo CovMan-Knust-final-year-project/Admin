@@ -34,6 +34,7 @@
 
         <!-- adding the remaining navbar -->
         <?php include_once 'partials/navbar.php';?>
+
     <!-- End Navbar -->
     <div class="content">
         <div class="container-fluid">
