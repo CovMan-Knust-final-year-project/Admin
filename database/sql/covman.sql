@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 27, 2021 at 08:38 PM
+-- Generation Time: Jun 01, 2021 at 01:33 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -34,6 +34,7 @@ CREATE TABLE `admin` (
   `phone_number` varchar(200) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `date_created` date NOT NULL,
   `time_created` time NOT NULL,
@@ -44,9 +45,35 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `status`, `company_name`, `phone_number`, `username`, `email`, `password`, `date_created`, `time_created`, `time_stamp`) VALUES
-(24, 1, 'KNUST', '0268977129', 'jesse', NULL, '$6$rounds=1000$ldfowetwnvmlope$EnGg4dQ2nQ8lwUUWGF3IR.y3iCMUvUTV/h6jO2Zm7GIou5vyL4smPcWXyvTEHxA6Jchq9BAKp1/7oPE.Y46k2.', '2021-05-26', '01:04:21', '2021-05-26 01:04:21'),
-(25, 1, 'RivEnterprise', '0268977129', 'admin', NULL, '$6$rounds=1000$ldfowetwnvmlope$EnGg4dQ2nQ8lwUUWGF3IR.y3iCMUvUTV/h6jO2Zm7GIou5vyL4smPcWXyvTEHxA6Jchq9BAKp1/7oPE.Y46k2.', '2021-05-26', '01:06:35', '2021-05-26 01:06:35');
+INSERT INTO `admin` (`id`, `status`, `company_name`, `phone_number`, `username`, `email`, `address`, `password`, `date_created`, `time_created`, `time_stamp`) VALUES
+(24, 1, 'Kwame Nkrumah US Tech', '0268977129', 'jesse', 'info@knust.edu.gh', 'None', '$6$rounds=1000$ldfowetwnvmlope$EnGg4dQ2nQ8lwUUWGF3IR.y3iCMUvUTV/h6jO2Zm7GIou5vyL4smPcWXyvTEHxA6Jchq9BAKp1/7oPE.Y46k2.', '2021-05-26', '01:04:21', '2021-05-28 10:04:49'),
+(25, 1, 'RivEnterprise', '0268977129', 'admin', NULL, NULL, '$6$rounds=1000$ldfowetwnvmlope$EnGg4dQ2nQ8lwUUWGF3IR.y3iCMUvUTV/h6jO2Zm7GIou5vyL4smPcWXyvTEHxA6Jchq9BAKp1/7oPE.Y46k2.', '2021-05-26', '01:06:35', '2021-05-26 01:06:35'),
+(28, 1, 'Jesse Inc', '0268977123', 'jesse3', NULL, NULL, '$6$rounds=1000$ldfowetwnvmlope$EnGg4dQ2nQ8lwUUWGF3IR.y3iCMUvUTV/h6jO2Zm7GIou5vyL4smPcWXyvTEHxA6Jchq9BAKp1/7oPE.Y46k2.', '2021-05-28', '10:01:12', '2021-05-28 10:01:12'),
+(30, 1, 'Julieen Inc', '0546545050', 'naana', 'naanajoyko5050@gmail.com', 'Kumasi', '$6$rounds=1000$ldfowetwnvmlope$ClfIx6cauk2s2MdMM28.JLcf274ga4s7zSLYL50UuTYiVADJjY0mv/1a/1sUM3gRFE.wOw1xNfwrI8KtwPiJ4.', '2021-05-29', '12:55:57', '2021-05-29 13:02:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance`
+--
+
+CREATE TABLE `attendance` (
+  `id` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `org_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `venue` int(11) NOT NULL,
+  `date_marked` date NOT NULL,
+  `time_marked` time NOT NULL,
+  `time_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`id`, `status`, `org_id`, `user_id`, `venue`, `date_marked`, `time_marked`, `time_stamp`) VALUES
+(1, 1, 30, 7, 3, '2021-05-18', '23:32:15', '2021-05-31 22:48:05');
 
 -- --------------------------------------------------------
 
@@ -76,7 +103,8 @@ INSERT INTO `cases` (`id`, `org_id`, `status`, `user_id`, `scan_id`, `date_repor
 (4, 24, 1, 6, 1, '2021-05-27', '06:25:00', '2021-05-27 20:25:00'),
 (5, 24, 1, 6, 1, '2021-05-27', '06:25:13', '2021-05-27 20:25:13'),
 (6, 24, 1, 6, 1, '2021-05-27', '06:27:27', '2021-05-27 20:27:27'),
-(7, 24, 1, 6, 1, '2021-05-27', '06:36:22', '2021-05-27 20:36:22');
+(7, 24, 1, 6, 1, '2021-05-27', '06:36:22', '2021-05-27 20:36:22'),
+(8, 30, 1, 6, 1, '2021-05-29', '01:14:00', '2021-05-29 15:14:00');
 
 -- --------------------------------------------------------
 
@@ -159,7 +187,8 @@ CREATE TABLE `mount_point` (
 
 INSERT INTO `mount_point` (`id`, `status`, `operational_status`, `org_id`, `venue`, `timestamp_`) VALUES
 (2, 1, 0, 24, 'College of Science', '2021-05-26 11:28:25'),
-(3, 1, 1, 24, 'KSB Inner room', '2021-05-26 11:28:05');
+(3, 1, 1, 24, 'KSB Inner room', '2021-05-26 11:28:05'),
+(4, 1, 0, 30, 'College of Science', '2021-05-29 13:05:23');
 
 -- --------------------------------------------------------
 
@@ -184,7 +213,7 @@ CREATE TABLE `scans` (
 --
 
 INSERT INTO `scans` (`id`, `org_id`, `mount_point_id`, `status`, `user_id`, `temperature`, `date_scanned`, `time_scanned`, `time_stamp`) VALUES
-(1, 24, 2, 1, 6, 32.5, '2021-05-06', '23:27:13', '2021-05-26 23:42:48');
+(1, 30, 2, 1, 6, 40, '2021-05-28', '23:27:13', '2021-05-29 13:13:19');
 
 -- --------------------------------------------------------
 
@@ -212,7 +241,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `org_id`, `status`, `image`, `first_name`, `last_name`, `dob`, `phone_number`, `level`, `date_created`, `time_created`, `time_stamp`) VALUES
-(6, 24, 0, 'helpinghand.jpg', 'Michael John', 'Smith', '2021-05-19', '0268977129', 200, '2021-05-26', '10:06:25', '2021-05-27 00:28:27');
+(6, 24, 1, 'helpinghand.jpg', 'John', 'Legend', '2021-05-19', '0268977129', 200, '2021-05-26', '10:06:25', '2021-05-30 12:51:15'),
+(7, 30, 1, 'driver.png', 'John', 'Anim', '2021-05-12', '0270000000', 100, '2021-05-29', '01:09:46', '2021-05-31 21:21:32');
 
 --
 -- Indexes for dumped tables
@@ -222,6 +252,12 @@ INSERT INTO `users` (`id`, `org_id`, `status`, `image`, `first_name`, `last_name
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -268,13 +304,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `attendance`
+--
+ALTER TABLE `attendance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cases`
 --
 ALTER TABLE `cases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `doctors`
@@ -292,7 +334,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `mount_point`
 --
 ALTER TABLE `mount_point`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `scans`
@@ -304,7 +346,7 @@ ALTER TABLE `scans`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
