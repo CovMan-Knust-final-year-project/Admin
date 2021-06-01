@@ -6,7 +6,7 @@
     if(isset($_POST['user_id'])){
         $user_id = $_POST["user_id"];
 
-        $query = "SELECT * FROM attendance WHERE user_id = :id AND status = 1";
+        $query = "SELECT * FROM scans WHERE user_id = :id";
         $statement = $con->prepare($query);
     
         $statement->execute(
@@ -17,19 +17,20 @@
         
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        $attendance_array = array();
+        $scans_array = array();
 
-        foreach($result as $results){
+        foreach ($result as $results){
             //user is present in the system
-            array_push($attendance_array,array(
-                "venue"    => fetchMountPointDetailsFromID($con,$results['venue'],'venue'),
-                "date"     => dateFormat($results['date_marked']),
-                "time"     => $results['time_marked'],
+            array_push($scans_array,array(
+                "id"       => $results['id'],
+                "date"     => dateFormat($results['date_scanned']),
+                "time"     => $results['time_scanned'],
+                "temperature" => $results['temperature'],
+                "status"      => $results['status'],
             ));
-
         }
-    
-        echo json_encode(array("Server response" => $attendance_array));
+
+        echo json_encode(array("Server response" => $scans_array));
         
     }
     else{
