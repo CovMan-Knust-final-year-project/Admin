@@ -66,4 +66,18 @@
         $result = $statement->fetch();
         return $result[$scope];
     }
+
+    function fetchOrgDetailsfromID($con, $id, $scope){
+        $query = "SELECT * FROM admin WHERE id = :id";
+        $statement = $con->prepare($query);
+
+        $statement->execute(
+            array(
+                ":id" => $id,
+            )
+        );
+
+        $result = $statement->fetch();
+        return $result[$scope];
+    }
 ?>
