@@ -29,7 +29,7 @@
         VALUES (:org_id, 1, :image, :fname, :lname, :dob, :phone_number, :level, curdate(),TIME_FORMAT(CURRENT_TIME(),'%h:%i:%s'), :timestamp_)";
     $statement = $con->prepare($query);
 
-    $count_query = "SELECT * FROM admin WHERE status = 1 AND phone_number = :number_";
+    $count_query = "SELECT * FROM users WHERE status = 1 AND phone_number = :number_";
     $count_statement = $con->prepare($count_query);
     $count_statement->execute(
         array(

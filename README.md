@@ -70,6 +70,9 @@ The repository contains php files used for the project. This is the structure.
 4. View Scans, report suspected cases to the hospital authorities.
 5. View attendance of students. 
 
+## Deploy to google cloud
+https://www.youtube.com/watch?v=xBF0OxT1V6k
+
 ## License
 
 ```

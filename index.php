@@ -83,7 +83,6 @@
 <div class="pen-footer"><a>CovMan 2021</a></div>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='https://codepen.io/andytran/pen/vLmRVp.js'></script>
-    <script  src="login_assets/js/index.js"></script>
     <!-- swall alert starts here -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
 
@@ -96,6 +95,7 @@
     <script src="sweetalert2.min.js"></script>
     <!-- swal ends here -->
 
+    <script  src="login_assets/js/index.js"></script>
     <script>
        //Numbers only for arithmetics
       function numberOnly(e) {

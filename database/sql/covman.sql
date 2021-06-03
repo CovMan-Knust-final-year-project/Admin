@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 01, 2021 at 01:33 AM
+-- Generation Time: Jun 03, 2021 at 01:24 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -73,7 +73,8 @@ CREATE TABLE `attendance` (
 --
 
 INSERT INTO `attendance` (`id`, `status`, `org_id`, `user_id`, `venue`, `date_marked`, `time_marked`, `time_stamp`) VALUES
-(1, 1, 30, 7, 3, '2021-05-18', '23:32:15', '2021-05-31 22:48:05');
+(1, 1, 30, 7, 3, '2021-05-18', '23:32:15', '2021-05-31 22:48:05'),
+(2, 1, 30, 7, 3, '2021-05-13', '13:32:15', '2021-05-26 22:48:05');
 
 -- --------------------------------------------------------
 
@@ -99,9 +100,9 @@ CREATE TABLE `cases` (
 INSERT INTO `cases` (`id`, `org_id`, `status`, `user_id`, `scan_id`, `date_reported`, `time_reported`, `time_stamp`) VALUES
 (1, 24, 1, 6, 1, '2021-05-27', '06:09:23', '2021-05-27 20:09:23'),
 (2, 24, 1, 6, 1, '2021-05-27', '06:09:49', '2021-05-27 20:09:49'),
-(3, 24, 1, 6, 1, '2021-05-27', '06:23:30', '2021-05-27 20:23:30'),
-(4, 24, 1, 6, 1, '2021-05-27', '06:25:00', '2021-05-27 20:25:00'),
-(5, 24, 1, 6, 1, '2021-05-27', '06:25:13', '2021-05-27 20:25:13'),
+(3, 24, 1, 7, 1, '2021-05-27', '06:23:30', '2021-06-01 20:40:56'),
+(4, 24, 1, 7, 1, '2021-05-27', '06:25:00', '2021-06-01 20:40:59'),
+(5, 24, 1, 7, 1, '2021-05-27', '06:25:13', '2021-06-01 20:41:02'),
 (6, 24, 1, 6, 1, '2021-05-27', '06:27:27', '2021-05-27 20:27:27'),
 (7, 24, 1, 6, 1, '2021-05-27', '06:36:22', '2021-05-27 20:36:22'),
 (8, 30, 1, 6, 1, '2021-05-29', '01:14:00', '2021-05-29 15:14:00');
@@ -124,7 +125,8 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`id`, `phone_number`, `name`, `date_logged_in`) VALUES
-(1, '0268977129', 'Jesse Anim', '2021-05-27 18:33:13');
+(1, '0268977129', 'Jesse Anim', '2021-05-27 18:33:13'),
+(2, '0270000000', 'John Anim', '2021-05-27 18:33:13');
 
 -- --------------------------------------------------------
 
@@ -213,7 +215,8 @@ CREATE TABLE `scans` (
 --
 
 INSERT INTO `scans` (`id`, `org_id`, `mount_point_id`, `status`, `user_id`, `temperature`, `date_scanned`, `time_scanned`, `time_stamp`) VALUES
-(1, 30, 2, 1, 6, 40, '2021-05-28', '23:27:13', '2021-05-29 13:13:19');
+(1, 30, 2, 1, 7, 40, '2021-05-28', '23:27:13', '2021-06-01 08:21:52'),
+(2, 30, 2, 0, 7, 20, '2021-05-28', '08:40:52', '2021-06-09 08:40:52');
 
 -- --------------------------------------------------------
 
@@ -310,7 +313,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cases`
@@ -322,7 +325,7 @@ ALTER TABLE `cases`
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -340,7 +343,7 @@ ALTER TABLE `mount_point`
 -- AUTO_INCREMENT for table `scans`
 --
 ALTER TABLE `scans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
