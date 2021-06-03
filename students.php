@@ -107,7 +107,7 @@
                                                         <?= addBracketsToPhone($results['phone_number'])?>
                                                     </td>
                                                     <td class="text-primary">
-                                                        200
+                                                        <?= $results['level']; ?>
                                                     </td>
                                                     <td class="text-center">
                                                         <button type="button" name="update" class="btn-sm btn-dark update" data-toggle="modal" onclick="edit_user(<?= $results['id'];?>)" data-target="#editaccountModal"><i
@@ -116,7 +116,7 @@
                                                     </td>
                                                 </tr>
                                             <?php
-                                                }
+                                                $i++;}
                                             ?>
                                         </tbody>
                                     </table>
