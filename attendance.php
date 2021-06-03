@@ -105,7 +105,7 @@
                                     </table>
                                 <?php 
                                     }else{?>
-                                        <h3>No attendance Yet</h3>
+                                        <h3 class='text-center'>No attendance Yet</h3>
                                 <?php 
                                     }
                                 ?>

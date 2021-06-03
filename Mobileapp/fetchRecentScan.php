@@ -6,7 +6,7 @@
     if(isset($_POST['user_id'])){
         $user_id = $_POST["user_id"];
 
-        $query = "SELECT * FROM scans t1 WHERE user_id = :id AND time_stamp = (SELECT MAX(time_stamp) FROM scans t2 WHERE t1.time_stamp = t2.time_stamp)";
+        $query = "SELECT * FROM scans t1 WHERE t1.user_id = :id AND time_stamp = (SELECT MAX(time_stamp) FROM scans t2 WHERE t1.time_stamp = t2.time_stamp AND t1.user_id = t2.user_id)";
     
         $statement = $con->prepare($query);
     
@@ -22,6 +22,7 @@
     
         //user is present in the system
         array_push($scans_array,array(
+ 	    "message"  => "200",
             "id"       => $results['id'],
             "date"     => dateFormat($results['date_scanned']),
             "time"     => $results['time_scanned'],
@@ -37,3 +38,4 @@
     }
 
 ?>
+
