@@ -11,7 +11,7 @@
                 ":org_id"       => $_POST['org_id'],
                 ":user_id"      => $_POST['person_id'],
                 ":venue"        => $_POST['venue'],
-                "time_stamp"    => date("Y-m-d H:i:s")
+                ":time_stamp"    => date("Y-m-d H:i:s")
             )
         );
 
