@@ -1,5 +1,6 @@
 <?php
     include_once '../database/config.php';
+    include_once '../helpers/functions.php';
 
     //positive cases are denoted by 1
     //negative cases are denoted by 0
@@ -21,11 +22,33 @@
         );
 
         if($marked){
+            // report case if temp is more than 37
             echo json_encode(
                 array(
                     "status" => "success", 
                 )
             );
+
+            $person_name = fetchUserDetailsFromID($con, $_POST['person_id'], 'first_name') . " " . fetchUserDetailsFromID($con, $_POST['person_id'], 'last_name');
+            $mount_point = fetchMountPointDetailsFromID($con, $_POST['venue'], 'venue');
+            $the_date    = dateFormat(date("Y-m-d H:i:s"));
+            $time        = date('H:i:s');
+
+            $user_message_good = "Hi " . $person_name . ", you have successfully been scanned in " . $mount_point . " today, " . $the_date . " at " . $time . ". Your temperature was " . $_POST['temp']. "°C .We have not found any symptoms of COVID-19, continue to stay safe.";
+            $user_message_bad  = "Hi " . $person_name . ", your temperature " . $_POST['temp']. "°C is above normal based on scan taken at " . $mount_point ." on " . $the_date. " at " . $time . " Stay put, admin has been notified to take you for further tests.";
+            $admin_message     = "Suspected case encountered. Proceed to take " . $person_name . " for further tests";
+
+            if($_POST['temp'] >= 37){ #suspected case
+               #send sms to admin 
+               sendSms(fetchOrgDetailsfromID($con, $_POST['org_id'], 'phone_number'), $admin_message);
+
+               #send sms to user to await instructions from admin
+               sendSms(fetchUserDetailsFromID($con, $_POST['person_id'], 'phone_number'), $user_message_bad);
+            }
+            else{
+                #send sms to user concerning scan details
+                sendSms(fetchUserDetailsFromID($con, $_POST['person_id'], 'phone_number'), $user_message_good);
+            }
         }
         else{
             echo json_encode(

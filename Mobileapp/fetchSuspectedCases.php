@@ -6,7 +6,7 @@
     if(isset($_POST['user_id'])){
         $user_id = $_POST["user_id"];
 
-        $query = "SELECT * FROM cases";
+        $query = "SELECT * FROM cases WHERE user_id = :id";
         $statement = $con->prepare($query);
     
         $statement->execute(
@@ -29,8 +29,6 @@
                 "org_name"       => fetchOrgDetailsfromID($con, $results['org_id'], 'company_name'),
                 "date"           => dateFormat($results['date_reported']),
                 "time"           => $results['time_reported'],
-
-                
             ));
         }
 

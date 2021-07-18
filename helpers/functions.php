@@ -80,4 +80,19 @@
         $result = $statement->fetch();
         return $result[$scope];
     }
+
+    // function fetchScanId($con, $time_stamp){
+    //     $query = "SELECT * FROM scans WHERE (SELECT TIMEDIFF(:current_time_stamp, :time_stamp)) <= '00:00:05'";
+    //     $statement = $con->prepare($query);
+
+    //     $statement->execute(
+    //         array(
+    //             ":current_time_stamp"   => date("Y-m-d H:i:s"),
+    //             ":time_stamp"           => $time_stamp,
+    //         )
+    //     );
+
+    //     $result = $statement->fetch();
+    //     return $result['id'];
+    // }
 ?>

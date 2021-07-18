@@ -10,10 +10,10 @@
 
 The aim of COVMAN is to completely replace and automatize all checks that have to be done due to
 COVID-19 including;
-I. checking for the availability of nose mask on person’s face
-II. checking of temperature,
-III. provision of sanitizer
-IV. marking of attendance in schools and universities
+- I. checking for the availability of nose mask on person’s face
+- II. checking of temperature,
+- III. provision of sanitizer
+- IV. marking of attendance in schools and universities
 before a person is allowed into a public establishment.
 
 ## :bulb: Motivation and Context
@@ -22,7 +22,7 @@ Lack of an autonomous system to emphasize the obedience of COVID-19 protocols ha
 the need for human resources to be used for the monitoring of the said protocols (wearing of nose
 mask, using sanitizer, checking temperature and so much more.).
 
-## :camera_flash: Screenshots-->
+## :camera_flash: Screenshots
 
 <!-- You can add more screenshots here if you like -->
 <img src="screenshots/1.png" width="30%">&emsp;<img src="screenshots/2.png" width="30%">
@@ -64,14 +64,19 @@ The repository contains php files used for the project. This is the structure.
 
 ## Features
 
-1. View all activities and statistics in the system.
-2. Add, edit delete mount points (Places in the system where the CovMan hardware is mounted).
-3. Add, edit and delete students.
-4. View Scans, report suspected cases to the hospital authorities.
-5. View attendance of students. 
+- 1. View all activities and statistics in the system.
+- 2. Add, edit delete mount points (Places in the system where the CovMan hardware is mounted).
+- 3. Add, edit and delete students.
+- 4. View Scans, report suspected cases to the hospital authorities.
+- 5. View attendance of students. 
 
-## Deploy to google cloud
+## Deployment
+Project was deployed to 000webhost.com. [link here](https://covman.000webhostapp.com/).
+mylesanim08@gmail.com
+
+### Deploy to google cloud
 https://www.youtube.com/watch?v=xBF0OxT1V6k
+
 
 ## License
 
