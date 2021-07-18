@@ -11,11 +11,12 @@
   include_once 'helpers/counters.php';
 
     $org_id       = $_SESSION['id'];
-    $query        = "SELECT * FROM scans WHERE org_id = :org_id LIMIT 2";
+    $query        = "SELECT * FROM scans WHERE org_id = :org_id AND date_scanned = :today LIMIT 2";
     $statement    = $con->prepare($query);
     $statement->execute(
         array(
             ":org_id" => $org_id,
+            ":today"  => date("Y-m-d"),
         )
     );
 

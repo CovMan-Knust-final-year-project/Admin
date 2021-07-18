@@ -14,7 +14,7 @@
     include_once 'helpers/functions.php';
 
     $org_id       = $_SESSION['id'];
-    $query        = "SELECT * FROM attendance WHERE org_id = :org_id";
+    $query        = "SELECT * FROM attendance WHERE org_id = :org_id ORDER BY id DESC";
     $statement    = $con->prepare($query);
     $statement->execute(
         array(
