@@ -87,7 +87,7 @@
             )
         );
 
-        return $date_statement->fetch()['date_created'];
+        return $date_statement->fetch()['date_created'] ?? 'None';
     }
 
     function fetchLatestUpdateDate_scans($con, $from_table){
@@ -106,7 +106,7 @@
             )
         );
 
-        return $date_statement->fetch()['date_scanned'];
+        return $date_statement->fetch()['date_scanned'] ?? 'None';
     }
 
     function fetchLatestUpdateDate_cases($con, $from_table){
@@ -125,7 +125,7 @@
             )
         );
 
-        return $date_statement->fetch()['date_reported'];
+        return $date_statement->fetch()['date_reported'] ?? 'None';
     }
 
     

@@ -69,3 +69,7 @@
 [2021-07-18 15:45:25.624] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/share/code/resources/app/extensions/php-language-features/dist/phpMain
 [2021-07-18 15:45:27.216] [exthost] [warning] [Decorations] CAPPING events from decorations provider vscode.git 316
 [2021-07-18 15:46:53.351] [exthost] [warning] [Decorations] CAPPING events from decorations provider vscode.git 362
+[2021-07-18 15:47:43.329] [exthost] [warning] [Decorations] CAPPING events from decorations provider vscode.git 361
+[2021-07-18 15:48:39.299] [exthost] [warning] [Decorations] CAPPING events from decorations provider vscode.git 361
+[2021-07-18 15:52:45.398] [exthost] [info] extension host terminating: received terminate message from renderer
+[2021-07-18 15:52:46.513] [exthost] [info] exiting with code 0
